@@ -12,13 +12,13 @@ import DaisyCare from './navigation';
 import { store, persistor } from './store'
 import Toast from 'react-native-toast-message';
 import { PersistGate } from 'redux-persist/integration/react';
-// import SplashScreen from 'react-native-splash-screen';
+import SplashScreen from 'react-native-splash-screen';
 
 export default function App() {
 
-  // useEffect(() => {
-  //   SplashScreen.hide()
-  // }, [])
+  useEffect(() => {
+    SplashScreen.hide()
+  }, [])
 
   return (
     <>
