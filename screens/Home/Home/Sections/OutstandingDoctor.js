@@ -1,38 +1,32 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import {
     Text,
     View,
     Image,
-    FlatList
+    FlatList,
+    TouchableOpacity
 } from 'react-native'
 import { connect } from "react-redux"
 import { styles } from './SectionStyle'
-import { getTopDoctorHomeService } from '../../../../services/userService'
 import _ from 'lodash'
 import { EmptyComponent } from '../../../../ultis'
+import ButtonTag from '../../../../components/ButtonTag'
 
-class OutStandingDoctor extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            topDoctorHome: []
-        }
-    }
+function OutStandingDoctor({
+    topDoctor,
+    navigation
+}) {
+    const [topDoctorHome, setTopDoctorHome] = useState([])
 
-    async componentDidMount() {
-        const res = await getTopDoctorHomeService(8)
-        if (res && res.errCode === 0) {
-            this.setState({ topDoctorHome: res.data })
-        }
-    }
+    useEffect(() => {
+        if (topDoctor && topDoctor.length > 0)
+            setTopDoctorHome(topDoctor);
+    },[topDoctor])
 
-    renderDoctor = (item) => {
+    const renderDoctor = (item) => {
         const doctorName = ` ${item.lastName} ${item.firstName}`
-        let obj = item;
-        delete obj.image
-        console.log(check, obj);
         return (
-            <View style={styles.sectionCard}>
+            <TouchableOpacity onPress={() => navigation.navigate('DetailDoctor', item.id)} style={styles.sectionCard}>
                 <Image
                     source={{
                         uri: item.image
@@ -41,36 +35,31 @@ class OutStandingDoctor extends Component {
                 />
                 <Text style={styles.doctorName}>{doctorName}</Text>
                 <Text style={styles.doctorMajor}>Cơ xương khớp</Text>
-            </View>
+            </TouchableOpacity>
         )
     }
 
-    render() {
-        const { topDoctorHome } = this.state
-        return (
-            <View style={styles.sectionContainer}>
-                <View style={styles.sectionHeader}>
-                    <Text style={styles.sectionTitle}>Bác sĩ nổi bật tuần qua</Text>
-                    <Text style={styles.btnTitle}>Tìm kiếm</Text>
-                </View>
+    return (
+        <View style={styles.sectionContainer}>
+            <ButtonTag title="Bác sĩ nổi bật tuần qua" btnTitle="Tìm kiếm" OnPress={() => navigation.navigate("Doctor")}/>
 
-                <View style={styles.sectionFooter}>
-                    <FlatList
-                        horizontal={true}
-                        data={topDoctorHome}
-                        keyExtractor={(obj) => Math.random()}
-                        renderItem={({ item }) => this.renderDoctor(item)}
-                        showsHorizontalScrollIndicator={false}
-                        ListEmptyComponent={EmptyComponent("Hệ thống đang bảo trì")}
-                    />
-                </View>
+            <View style={styles.sectionFooter}>
+                <FlatList
+                    horizontal={true}
+                    data={topDoctorHome}
+                    keyExtractor={(obj) => Math.random()}
+                    renderItem={({ item }) => renderDoctor(item)}
+                    showsHorizontalScrollIndicator={false}
+                    ListEmptyComponent={EmptyComponent("Hệ thống đang bảo trì")}
+                />
             </View>
-        )
-    }
+        </View>
+    )
 }
 
 
-const mapStateToProps = () => ({
+const mapStateToProps = state => ({
+    topDoctor: state.app.homeData.topDoctor
 })
 
 const mapDispatchToProps = dispatch => ({

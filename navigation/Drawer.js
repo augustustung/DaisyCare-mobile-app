@@ -50,8 +50,8 @@ function CustomDrawerContent(props) {
                     size={size}
                   />
                 )}
-                label="Home"
-                onPress={() => { props.navigation.navigate('Home') }}
+                label="Trang chủ"
+                onPress={() => props.navigation.navigate('HomeScreen')}
               />
               <DrawerItem
                 icon={({ color, size }) => (
@@ -61,8 +61,8 @@ function CustomDrawerContent(props) {
                     size={size}
                   />
                 )}
-                label="Message"
-                onPress={() => { props.navigation.navigate('Message') }}
+                label="Tin nhắn"
+                onPress={() => props.navigation.navigate('MessageScreen')}
               />
               <DrawerItem
                 icon={({ color, size }) => (
@@ -72,8 +72,8 @@ function CustomDrawerContent(props) {
                     size={size}
                   />
                 )}
-                label="Bookmarks"
-                onPress={() => { props.navigation.navigate('BookmarkScreen') }}
+                label="Lịch đặt"
+                onPress={() => props.navigation.navigate('BookmarkScreen')}
               />
               <DrawerItem
                 icon={({ color, size }) => (
@@ -83,19 +83,8 @@ function CustomDrawerContent(props) {
                     size={size}
                   />
                 )}
-                label="Settings"
-                onPress={() => { props.navigation.navigate('SettingsScreen') }}
-              />
-              <DrawerItem
-                icon={({ color, size }) => (
-                  <MaterialCommunityIcons
-                    name="account-check-outline"
-                    color={color}
-                    size={size}
-                  />
-                )}
-                label="Support"
-                onPress={() => { props.navigation.navigate('SupportScreen') }}
+                label="Cài đặt"
+                onPress={() => props.navigation.navigate('SettingsScreen')}
               />
             </View>
           </View>
@@ -103,7 +92,7 @@ function CustomDrawerContent(props) {
       </DrawerContentScrollView>
 
       <DrawerItem
-        label="Sign out"
+        label="Đăng xuất"
         onPress={signOut}
         icon={({ size, color }) =>
           <MaterialCommunityIcons

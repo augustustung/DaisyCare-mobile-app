@@ -1,28 +1,28 @@
 import axios from '../axios'
 
-export const handleLogin = (userEmail, userPassword) => {
+const handleLogin = (userEmail, userPassword) => {
     return axios.post('/api/login', {
         email: userEmail,
         password: userPassword
     })
 }
 
-export const handleRegister = (data) => {
+const handleRegister = (data) => {
     return axios.post('/api/register', data)
 }
 
-export const handleLogout = () => {
+const handleLogout = () => {
 
 }
 
-
-// export const getAllCodeService = (inputType) => {
-//     return axios.get(`/api/allcode?type=${inputType}`)
-// }
-
-export const getTopDoctorHomeService = (limit) => {
-    return axios.get(`/api/top-doctor-home?limit=${limit}`)
+export {
+    handleLogin,
+    handleRegister,
+    handleLogout
 }
+
+
+
 
 // export const getAllDoctors = () => {
 //     return axios.get("/api/get-all-doctors")
@@ -64,10 +64,6 @@ export const getTopDoctorHomeService = (limit) => {
 //     return axios.post(`/api/create-a-new-specialty`, data)
 // }
 
-// export const getTopSpecialties = (limit) => {
-//     return axios.get(`/api/get-top-specialties-home?limit=${limit}`)
-// }
-
 // export const getAllSpecialties = () => {
 //     return axios.get("/api/get-all-specialties")
 // }
@@ -78,10 +74,6 @@ export const getTopDoctorHomeService = (limit) => {
 
 // export const createNewClinic = (data) => {
 //     return axios.post(`/api/create-a-new-clinic`, data)
-// }
-
-// export const getTopClinics = (limit) => {
-//     return axios.get(`/api/get-top-clinics-home?limit=${limit}`)
 // }
 
 // export const getAllClinics = () => {

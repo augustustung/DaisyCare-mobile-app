@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
-// import { styles } from '../Navigation/App/screens/Home/Sections/sectionStyles'
+import { ColorConst, scaleH, scaleV } from '../ultis'
 
 function ButtonTag({ title, btnTitle, OnPress }) {
     return (
@@ -16,5 +16,22 @@ function ButtonTag({ title, btnTitle, OnPress }) {
 export default ButtonTag
 
 const styles = StyleSheet.create({
-
+    sectionHeader: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row'
+    },
+    sectionTitle: {
+        fontSize: scaleH(18),
+        lineHeight: scaleV(21.5),
+        fontWeight: '500',
+        letterSpacing: 0.5
+    },
+    btnTitle: {
+        color: ColorConst.DEEP_GREEN,
+        fontSize: scaleH(16),
+        letterSpacing: 0.5,
+        fontWeight: '700',
+        lineHeight: scaleV(21.5)
+    },
 })

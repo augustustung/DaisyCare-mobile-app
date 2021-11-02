@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native'
 
 function SafeContainer({ children }) {
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#eee", paddingBottom: 16 }}>
             {children}
         </SafeAreaView>
     )

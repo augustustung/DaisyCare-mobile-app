@@ -1,49 +1,50 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Text,
-    TouchableOpacity,
     View,
     Image,
-    FlatList
+    FlatList,
+    TouchableOpacity
 } from 'react-native'
 import { connect } from "react-redux"
 import { EmptyComponent } from '../../../../ultis'
 import { styles } from './SectionStyle'
+import ButtonTag from '../../../../components/ButtonTag'
+import SafeContainer from '../../../../components/SafeContainer'
 
+function Clinic({
+    navigation,
+    topClinics
+}) {
+    const [dataClinic, setDataClinic] = useState([])
 
-class Clinic extends Component {
-    constructor(props) {
-        super(props)
-    }
+    useEffect(() => {
+        if(topClinics && topClinics.length > 0) {
+            setDataClinic(topClinics)
+        }
+    }, [topClinics])
 
-    renderClinic = (item) => (
-        <View style={styles.sectionCard}>
+    const renderClinic = (item) => (
+        <TouchableOpacity onPress={() => navigation.navigate('DetailClinic', item.id)} style={styles.sectionCard}>
             <Image
-                source={{ uri: item.images }}
+                source={{ uri: item.image }}
                 style={styles.cardImg}
             />
-            <Text style={styles.cardTitle}>{item.title}</Text>
-        </View>
+            <Text style={styles.cardTitle}>{item.nameVi}</Text>
+        </TouchableOpacity>
     )
 
-    render() {
-        return (
+    return (
+        <SafeContainer>
             <View style={styles.sectionContainer}>
-                <View style={styles.sectionHeader}>
-                    <Text style={styles.sectionTitle}>Cơ sở y tế nổi bật</Text>
-
-
-                    <TouchableOpacity style={styles.sectionButton}>
-                        <Text style={styles.btnTitle}>Xem thêm</Text>
-                    </TouchableOpacity>
-                </View>
+                <ButtonTag title="Cơ sở y tế nổi bật" btnTitle="Xem thêm" OnPress={() => navigation.navigate('Clinic')}/>
 
                 <View style={styles.sectionFooter}>
                     <FlatList
-                        data={news}
+                        data={dataClinic}
                         horizontal={true}
                         keyExtractor={(obj) => Math.random()}
-                        renderItem={({ item }) => this.renderClinic(item)}
+                        renderItem={({ item }) => renderClinic(item)}
                         style={{ backgroundColor: '#eee' }}
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}
@@ -51,34 +52,12 @@ class Clinic extends Component {
                     />
                 </View>
             </View>
-        )
-    }
+        </SafeContainer>
+    )
 }
 
-
-const news = [
-    {
-        id: 1,
-        title: "asdasdadasdasda",
-        subtitle: "sadasdasdadasdasfnfgn",
-        images: 'https://placeimg.com/500/300'
-    },
-    {
-        id: 2,
-        title: "asdasadasdasda",
-        subtitle: "sadasdasdadasdasfnfgn",
-        images: 'https://placeimg.com/500/300'
-    },
-    {
-        id: 3,
-        title: "asdasdasdasda",
-        subtitle: "sadasdasdadasdasfnfgn",
-        images: 'https://placeimg.com/500/300'
-    }
-]
-
-const mapStateToProps = () => ({
-
+const mapStateToProps = (state) => ({
+    topClinics: state.app.homeData.topClinic
 });
 
 const mapDispatchToProps = dispatch => ({

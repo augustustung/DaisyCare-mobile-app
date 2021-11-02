@@ -5,7 +5,6 @@ import {
     Text,
     TextInput
 } from 'react-native'
-import { connect } from "react-redux"
 import { styles } from '../../style.home'
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import { scaleH, scaleV } from '../../../../ultis'
@@ -40,13 +39,4 @@ function Banner() {
     )
 }
 
-const mapStateToProps = (state) => ({
-
-});
-
-const mapDispatchToProps = dispatch => ({
-
-})
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Banner)
+export default Banner

@@ -10,7 +10,8 @@ export const CustomDropDownPicker = ({
     setSelectedValue,
     setItems,
     borderColor,
-    placeholder
+    placeholder,
+    disableSearch
 }) => {
     return (
         <DropDownPicker
@@ -21,6 +22,7 @@ export const CustomDropDownPicker = ({
             placeholder={placeholder}
             setValue={setSelectedValue}
             setItems={setItems}
+            searchable={disableSearch ? false : true}
             showArrowIcon={false}
             style={{
                 borderColor: borderColor ? borderColor : open ? ColorConst.DEEP_GREEN : ColorConst.NEUTRAL_LIGHT,
@@ -38,7 +40,7 @@ export const CustomDropDownPicker = ({
                 lineHeight: scaleV(21.6)
             }}
             selectedItemLabelStyle={{
-                color: ColorConst.PRIMARY_BLUE
+                color: ColorConst.DEEP_GREEN
             }}
             listItemLabelStyle={{
                 fontWeight: '400'

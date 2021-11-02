@@ -9,4 +9,11 @@ const ColorConst = {
     PRIMARY_RED: "#FB7181"
 }
 
-export { REGEX, ColorConst }
+const METHOD = {
+    GET: "GET",
+    PUT: "PUT",
+    DELETE: "DELETE",
+    POST: "POST"
+}
+
+export { REGEX, ColorConst, METHOD }

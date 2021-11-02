@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import {
     View,
     Text,
@@ -12,9 +12,11 @@ import { styles } from './style.login'
 import * as Animatable from 'react-native-animatable'
 import Feather from "react-native-vector-icons/Feather"
 import { handleRegister } from '../../services/userService'
+import { loginSuccess } from '../../redux/actions'
 import Toast from 'react-native-toast-message';
 import { FormButton, FormInput, CustomDropDownPicker } from '../../components'
-import { ColorConst, ErrorText, scaleH, scaleV } from '../../ultis'
+import { ColorConst, scaleH, scaleV } from '../../ultis'
+import { useDispatch } from 'react-redux'
 
 function RegisterScreen({
     navigation
@@ -26,17 +28,15 @@ function RegisterScreen({
         phoneNumber: '',
         address: ''
     })
-
+    const dispatch = useDispatch()
     const [gender, setGender] = useState(null)
-
-    const [err, setErr] = useState('')
     const [sercurityEntry, setSercurityEntry] = useState(true)
     const [loading, setLoading] = useState(true)
     const [open, setOpen] = useState(false)
     const [items, setItems] = useState([
-        { label: 'Male', value: 'M' },
-        { label: 'Female', value: 'F' },
-        { label: "Other", value: "O" }
+        { label: 'Nam', value: 'M' },
+        { label: 'Nữ', value: 'F' },
+        { label: "Khác", value: "O" }
     ])
 
     const {
@@ -68,8 +68,20 @@ function RegisterScreen({
     }
 
     const _onRegister = async () => {
-        const firstName = fullName.split(" ")[0]
-        const lastName = fullName.split(" ")[1]
+        const validate = validateInfo()
+        if(!validate)
+            return
+        
+        let firstName = ''
+        let lastName = ''
+        const arrName = fullName.split(" ")
+        if(arrName.length > 2) {
+            firstName = arrName[0]
+            lastName = arrName.filter(item => item !== firstName).join(',')
+        } else {
+            firstName = arrName[0]
+            lastName = arrName[1] || '   '
+        }
 
         const res = await handleRegister({
             email: email,
@@ -77,27 +89,38 @@ function RegisterScreen({
             firstName: firstName,
             lastName: lastName,
             phoneNumber: phoneNumber,
+            birthday: new Date(),
             address: address,
             gender: gender
         })
 
-        // if (res && res.errCode === 0) {
-        //     Toast.show({
-        //         type: 'success',
-        //         position: 'top',
-        //         text1: 'Register succeed!',
-        //         text2: 'You can login now 👋',
-        //         autoHide: true,
-        //     })
-        //     this.props.navigation.goBack()
-        // } else {
-        //     Toast.show({
-        //         type: "error",
-        //         position: 'top',
-        //         text1: "Lỗi",
-        //         autoHide: true,
-        //     })
-        // }
+        if (res && res.errCode === 0) {
+            dispatch(loginSuccess({
+                email: email,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                phoneNumber: phoneNumber,
+                address: address,
+                birthday: new Date(),
+                gender: gender
+            }))
+            Toast.show({
+                type: 'success',
+                position: 'top',
+                text1: 'Đăng ký thành công!',
+                text2: 'Chào mừng đến với Daisy Care 👋',
+                autoHide: true,
+            })
+        } else {
+            console.log(res)
+            Toast.show({
+                type: "error",
+                position: 'top',
+                text1: "Có lỗi xảy ra. Vui lòng thử lại",
+                autoHide: true,
+            })
+        }
     }
 
     return (
@@ -131,14 +154,12 @@ function RegisterScreen({
 
                         <View style={styles.wrapper}>
                             <FormInput
-                                // title="Password"
                                 value={password}
                                 setValue={(text) => setUserInfo(prev => ({ ...prev, password: text }))}
                                 uri="lock"
                                 marginBottom={scaleV(16)}
                                 secureTextEntry={sercurityEntry}
                                 placeholder="Mật khẩu"
-                            // borderColor={borderPasswordColor}
                             />
 
                             <Feather
@@ -146,13 +167,13 @@ function RegisterScreen({
                                 color="grey"
                                 size={scaleH(24)}
                                 style={{ alignSelf: 'flex-end', zIndex: 2, marginBottom: scaleV(16) }}
-                                onPress={() => this.setState({ sercurityEntry: !sercurityEntry })}
+                                onPress={() => setSercurityEntry(!sercurityEntry)}
                             />
                         </View>
                         <FormInput
                             uri="user-o"
                             marginBottom={scaleV(16)}
-                            placeholder="Full name"
+                            placeholder="Họ tên"
                             value={fullName}
                             setValue={(text) => setUserInfo(prev => ({ ...prev, fullName: text }))}
                         />
@@ -175,7 +196,7 @@ function RegisterScreen({
                         />
 
                         <CustomDropDownPicker
-                            placeholder="Select your gender: "
+                            placeholder="Chọn giới tính: "
                             open={open}
                             selectedValue={gender}
                             listItems={items}

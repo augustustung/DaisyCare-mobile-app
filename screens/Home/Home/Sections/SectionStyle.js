@@ -6,30 +6,12 @@ export const styles = StyleSheet.create({
         marginHorizontal: scaleH(16),
         marginTop: scaleV(30)
     },
-    sectionHeader: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexDirection: 'row'
-    },
-    sectionTitle: {
-        fontSize: scaleH(18),
-        lineHeight: scaleV(21.5),
-        fontWeight: '500',
-        letterSpacing: 0.5
-    },
-    btnTitle: {
-        color: ColorConst.DEEP_GREEN,
-        fontSize: scaleH(16),
-        letterSpacing: 0.5,
-        fontWeight: '700',
-        lineHeight: scaleV(21.5)
-    },
     sectionFooter: {
         paddingTop: scaleV(16),
         backgroundColor: "#eee"
     },
     sectionCard: {
-        height: scaleV(170),
+        height: scaleV(177),
         paddingRight: scaleH(16),
         width: scaleH(220)
     },

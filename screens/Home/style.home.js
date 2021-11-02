@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { scaleV, scaleH, ColorConst } from '../../ultis'
+import { scaleV, scaleH, ColorConst, SCREEN_WIDTH } from '../../ultis'
 
 export const styles = StyleSheet.create({
     container: {
@@ -80,5 +80,43 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 5,
         fontWeight: '500'
+    },
+// ======================================================================= //
+    sectionItem: {
+        marginHorizontal: scaleH(16),
+        flexDirection: 'row',
+        marginTop: scaleV(16),
+        shadowColor: '#000',
+        shadowOpacity: 0.3,
+        shadowOffset: { width: 0, height: 1 }
+    },
+    sectionItemImage: {
+        width: scaleH(100),
+        height: scaleV(70),
+        resizeMode: 'cover',
+        marginRight: scaleH(16)
+    },
+    sectionItemTitle: {
+        fontSize: scaleH(16),
+        lineHeight: scaleV(21.5),
+        letterSpacing: 0.5,
+        width: SCREEN_WIDTH - scaleH(48) - scaleH(100),
+        paddingTop: 10
+    },
+    sectionItemAvatar: {
+        width: scaleH(80),
+        height: scaleH(80),
+        resizeMode: 'cover',
+        marginRight: scaleH(16)
+    },
+    horizontal16: {
+        marginHorizontal: scaleH(16)
+    },
+    subtitle: {
+        fontSize: scaleH(14),
+        lineHeight: scaleV(21.5),
+        letterSpacing: 0.5,
+        color: "#a0a0a0",
+        textAlign: 'center'
     }
 })

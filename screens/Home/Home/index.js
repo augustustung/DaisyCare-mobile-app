@@ -16,9 +16,11 @@ import OutstandingDoctor from './Sections/OutstandingDoctor'
 import { scaleV } from '../../../ultis'
 import HomeFooter from './Sections/HomeFooter'
 import Covid from './Sections/Covid'
+import * as actions from '../../../redux/actions'
 
 function HomeScreen({
-    navigation
+    navigation,
+    fetchHomeData
 }) {
 
     useLayoutEffect(() => {
@@ -37,7 +39,9 @@ function HomeScreen({
             headerTitleAlign: 'center',
             headerStyle: { height: scaleV(70) }
         })
+        fetchHomeData()
     }, [])
+
     return (
         <Animatable.View
             style={styles.container}
@@ -46,10 +50,10 @@ function HomeScreen({
         >
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Banner />
-                <Specialty />
-                <Clinic />
-                <OutstandingDoctor />
-                <Covid />
+                <Specialty navigation={navigation} />
+                <Clinic navigation={navigation}/>
+                <OutstandingDoctor navigation={navigation}/>
+                <Covid navigation={navigation}/>
                 <HomeFooter />
             </ScrollView>
         </Animatable.View>
@@ -62,7 +66,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
+    fetchHomeData: () => dispatch(actions.fetchHomeData())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
