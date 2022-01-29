@@ -26,8 +26,6 @@ const Covid = () => {
   useEffect(() => {
     fetchDataCOVID()
   },[])
-  
-  console.log(infoCOVID)
 
   return (
     <SafeContainer>

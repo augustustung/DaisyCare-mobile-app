@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, FlatList, Image } from 'react-native'
+import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import SafeContainer from '../../../components/SafeContainer'
 import CustomHeader from '../../../components/CustomHeader'
 import { ColorConst, headerLeft, scaleH } from '../../../ultis'
@@ -45,7 +45,7 @@ const AllDoctor = ({
     const renderItem = ({ item }) => {
         const fullName = `${item.lastName} ${item.firstName}`
         return (
-            <View style={styles.sectionItem}>
+            <TouchableOpacity style={styles.sectionItem} onPress={() => navigation.navigate("DetailDoctor", item.id)}>
                 <View>
                     <Image
                         source={{ uri: item.image }}
@@ -59,7 +59,7 @@ const AllDoctor = ({
                 <Text numberOfLines={3} style={styles.sectionItemTitle}>
                     {fullName}
                 </Text>
-            </View>
+            </TouchableOpacity>
         )
     }
 

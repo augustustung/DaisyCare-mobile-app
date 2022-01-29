@@ -40,8 +40,8 @@ const getAllSpecialties = () => {
     return axios.get('/api/get-all-specialties')
 }
 
-const getDetailSpecialty = (id) => {
-    return axios.get(`/api/get-detail-specialty-by-id?id=${id}&location="ALL"`)
+const getDetailSpecialty = (id, queryLocation = "ALL") => {
+    return axios.get(`/api/get-detail-specialty-by-id?id=${id}&location=${queryLocation}`)
 }
 
 const getAllCodeService = (inputType) => {

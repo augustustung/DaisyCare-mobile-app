@@ -79,7 +79,7 @@ const AllSpecialty = ({
             </View>
             <FlatList 
                 data={dataSpecialty}
-                keyExtractor={obj => Math.random()}
+                keyExtractor={() => Math.random()}
                 renderItem={renderItem}
             />
         </SafeContainer>

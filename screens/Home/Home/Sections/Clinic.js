@@ -43,7 +43,7 @@ function Clinic({
                     <FlatList
                         data={dataClinic}
                         horizontal={true}
-                        keyExtractor={(obj) => Math.random()}
+                        keyExtractor={() => Math.random()}
                         renderItem={({ item }) => renderClinic(item)}
                         style={{ backgroundColor: '#eee' }}
                         showsVerticalScrollIndicator={false}

@@ -28,10 +28,12 @@ export const CustomDropDownPicker = ({
                 borderColor: borderColor ? borderColor : open ? ColorConst.DEEP_GREEN : ColorConst.NEUTRAL_LIGHT,
                 height: scaleV(48),
                 marginBottom: scaleV(16),
-                borderRadius: 5
+                borderRadius: 5,
+                fontSize: 16
             }}
             dropDownContainerStyle={{
-                borderColor: ColorConst.NEUTRAL_LIGHT
+                borderColor: ColorConst.NEUTRAL_LIGHT,
+                backgroundColor: "#000"
             }}
             textStyle={{
                 color: ColorConst.NEUTRAL_GREY,

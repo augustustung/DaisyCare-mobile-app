@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: "http://192.168.0.104:8080",
+    baseURL: "https://daisycare-mobile-server.herokuapp.com",
 });
 
 instance.interceptors.response.use(

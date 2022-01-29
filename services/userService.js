@@ -48,9 +48,9 @@ export {
 //     return axios.get(`/api/get-extra-info-doctors-by-id?doctorId=${id}`)
 // }
 
-// export const getProfileDoctorById = (id) => {
-//     return axios.get(`/api/get-profile-doctors-by-id?doctorId=${id}`)
-// }
+export const getProfileDoctorById = (id) => {
+    return axios.get(`/api/get-profile-doctors-by-id?doctorId=${id}`)
+}
 
 // export const postBookingAppointment = (data) => {
 //     return axios.post(`/api/patient-book-schedule`, data)
@@ -66,10 +66,6 @@ export {
 
 // export const getAllSpecialties = () => {
 //     return axios.get("/api/get-all-specialties")
-// }
-
-// export const getDetailSpecialtyById = (data) => {
-//     return axios.get(`/api/get-detail-specialty-by-id/?id=${data.id}&location=${data.location}`)
 // }
 
 // export const createNewClinic = (data) => {

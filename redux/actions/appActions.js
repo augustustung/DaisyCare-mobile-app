@@ -13,7 +13,7 @@ const fetchHomeData = () => {
             resDoctor && resDoctor.errCode === 0
             && resSpecialty && resSpecialty.errCode === 0
             && resClinic && resClinic.errCode === 0
-        )
+        ) {
             dispatch({
                 type: actionTypes.FETCH_HOME_DATA_SUCCESS,
                 payload: {
@@ -22,8 +22,7 @@ const fetchHomeData = () => {
                     topSpecialty: resSpecialty.data
                 }
             })
-
-        else {
+        } else {
             dispatch({ type: actionTypes.PROCESS_APP_ACTIONS_FAILED })
             Toast.show({
                 text1: "Error",
