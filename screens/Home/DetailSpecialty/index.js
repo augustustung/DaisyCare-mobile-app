@@ -7,6 +7,8 @@ import { getAllCodeService, getDetailSpecialty } from '../../../services'
 import styles from './detailSpecialty'
 import HTMLView from 'react-native-htmlview'
 import ProfileDoctor from '../../../components/ProfileDoctor'
+import DoctorSchedule from '../../../components/DoctorSchedule'
+import DoctorExtraInfo from '../../../components/DoctorExtraInfo'
 import { CustomDropDownPicker } from '../../../components/CustomDropDownPicker'
 
 function DetailSpecialty({
@@ -106,14 +108,25 @@ function DetailSpecialty({
               keyExtractor={() => Math.random()}
               data={dataSpecialty?.doctorSpecialty || []}
               renderItem={({ item }) =>
-                <ProfileDoctor
-                  doctorId={item.doctorId}
-                  key={Math.random()}
-                  isShowDoctorDescription={true}
-                  isShowLink={true}
-                  isShowPrice={false}
-                  navigation={navigation}
-                />
+                <View style={styles.eachDoctor}>
+                  <ProfileDoctor
+                    doctorId={item.doctorId}
+                    key={Math.random()}
+                    isShowDoctorDescription={true}
+                    isShowLink={true}
+                    isShowPrice={false}
+                    navigation={navigation}
+                  />
+                  <View style={styles.dtContentRight}>
+                    <View style={styles.doctorSchedule}>
+                      <DoctorSchedule doctorIdFromParent={item?.doctorId || 0} navigation={navigation} />
+                    </View>
+
+                    <View style={styles.doctorExtraInfo}>
+                      <DoctorExtraInfo doctorIdFromParent={item?.doctorId || 0} navigation={navigation} />
+                    </View>
+                  </View>
+                </View>
               }
               ListEmptyComponent={EmptyComponent("Không có bác sĩ trong khu vực này")}
             />

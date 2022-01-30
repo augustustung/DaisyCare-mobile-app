@@ -9,7 +9,8 @@ const initialState = {
     isLoading: false,
     allSpecialty: [],
     allClinic: [],
-    allDoctor: []
+    allDoctor: [],
+    genders: []
 }
 
 
@@ -49,6 +50,11 @@ const appReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false
+            }
+        case actionTypes.FETCH_GENDER_SUCCESS:
+            return {
+                ...state,
+                genders: action.payload
             }
         default:
             return state;

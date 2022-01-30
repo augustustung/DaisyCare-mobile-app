@@ -54,3 +54,7 @@ export const headerLeft = ({ navigation, routeName, width }) => {
             }} numberOfLines={1}>{routeName}</Text>
         </TouchableOpacity>)
 }
+
+export function currencyFormat(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') + " vnđ"
+}

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { getDetailClinicById } from '../../../../services/userService'
+import { getDetailClinic } from '../../../services'
 import _ from 'lodash'
-import ProfileDoctor from '../Doctor/ProfileDoctor'
-import DoctorSchedule from '../Doctor/DoctorSchedule';
-import DoctorExtraInfo from '../Doctor/DoctorExtraInfo';
+import ProfileDoctor from '../../../components/ProfileDoctor'
+import DoctorSchedule from '../../../components/DoctorSchedule'
+import DoctorExtraInfo from '../../../components/DoctorExtraInfo'
 import styles from './detailClinic.style'
 import SafeContainer from '../../../components/SafeContainer';
-import { ScrollView, View, Text } from 'react-native';
+import { ScrollView, View, Text, FlatList } from 'react-native';
 import CustomHeader from '../../../components/CustomHeader';
+import { EmptyComponent, headerLeft } from '../../../ultis';
+import HTMLView from 'react-native-htmlview';
 
 function DetailClinic({
   route,
@@ -19,8 +21,7 @@ function DetailClinic({
   async function fetchData() {
     let clinicId = route.params
 
-    let res = await getDetailClinicById(clinicId)
-
+    let res = await getDetailClinic(clinicId)
     if (res && res.errCode === 0) {
       let arrId = []
       let data = res.data
@@ -47,52 +48,41 @@ function DetailClinic({
       <ScrollView>
         <CustomHeader headerLeft={() => headerLeft({ navigation: navigation, routeName: 'Chi tiết phòng khám' })} />
         <View style={styles.detailSpecialtyContainer}>
-          <View style={styles.detailSpecialtyBody}>
-            {/* {
-              arrDoctorId && arrDoctorId.length > 0 ? arrDoctorId.map((item, index) => {
-                return (
-                  <View className="each-doctor" key={index}>
-
-                    <View className="dt-content-left">
-                      <ProfileDoctor
-                        doctorId={item}
-                        isShowDoctorDescription={true}
-                        isShowLink={true}
-                        isShowPrice={false}
-                      // dataTime={dataSchedule}
-                      />
-                    </View>
-
-                    <View className="dt-content-right">
-                      <View className="doctor-schedule">
-                        <DoctorSchedule doctorIdFromParent={item} />
-                      </View>
-
-                      <View className="doctor-extra-info">
-                        <DoctorExtraInfo doctorIdFromParent={item} />
-                      </View>
-                    </View>
+          <FlatList
+            keyExtractor={() => Math.random()}
+            data={arrDoctorId || []}
+            renderItem={({ item }) =>
+              <View style={styles.eachDoctor}>
+                <ProfileDoctor
+                  doctorId={item}
+                  key={Math.random()}
+                  isShowDoctorDescription={true}
+                  isShowLink={true}
+                  isShowPrice={false}
+                  navigation={navigation}
+                />
+                <View style={styles.dtContentRight}>
+                  <View>
+                    <DoctorSchedule doctorIdFromParent={item || 0} navigation={navigation} />
                   </View>
 
-                )
-              }) : (
-                <View className="ds-none">
-                  <FormattedMessage id="manage-doctor.none" />
+                  <View style={styles.doctorExtraInfo}>
+                    <DoctorExtraInfo doctorIdFromParent={item || 0} navigation={navigation} />
+                  </View>
                 </View>
-              )
-            } */}
+              </View>
+            }
+            ListEmptyComponent={EmptyComponent("Không có bác sĩ trong bệnh viện này")}
+          />
 
-            {/* <View className="detail-specialty-description">
-              {
-                dataDetailClinic && !_.isEmpty(dataDetailClinic) && (
-                  <View
-                    dangerouslySetInnerHTML={{
-                      __html: dataDetailClinic.descriptionHTML
-                    }}
-                  />
-                )
-              }
-            </View> */}
+          <View style={styles.detailSpecialtyDescription}>
+            {
+              dataDetailClinic && !_.isEmpty(dataDetailClinic) && (
+                <HTMLView
+                  value={dataDetailClinic?.descriptionHTML || "<p></p>"}
+                />
+              )
+            }
           </View>
         </View>
       </ScrollView>

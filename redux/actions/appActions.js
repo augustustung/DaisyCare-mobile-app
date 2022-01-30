@@ -36,7 +36,7 @@ const fetchAllSpecialty = () => {
     return async dispatch => {
         dispatch({ type: actionTypes.PROCESS_APP_ACTIONS })
         const resSpecialty = await FUNCTION.getAllSpecialties()
-        if(resSpecialty && resSpecialty.errCode === 0) {
+        if (resSpecialty && resSpecialty.errCode === 0) {
             dispatch({
                 type: actionTypes.FETCH_ALL_SPECIALTY_SUCCESS,
                 payload: resSpecialty.data
@@ -55,7 +55,7 @@ const fetchAllDoctor = () => {
     return async dispatch => {
         dispatch({ type: actionTypes.PROCESS_APP_ACTIONS })
         const resDoctor = await FUNCTION.getAllDoctor()
-        if(resDoctor && resDoctor.errCode === 0) {
+        if (resDoctor && resDoctor.errCode === 0) {
             dispatch({
                 type: actionTypes.FETCH_ALL_DOCTOR_SUCCESS,
                 payload: resDoctor.data
@@ -74,7 +74,7 @@ const fetchAllClinic = () => {
     return async dispatch => {
         dispatch({ type: actionTypes.PROCESS_APP_ACTIONS })
         const resClinic = await FUNCTION.getAllClinics()
-        if(resClinic && resClinic.errCode === 0) {
+        if (resClinic && resClinic.errCode === 0) {
             dispatch({
                 type: actionTypes.FETCH_ALL_CLINIC,
                 payload: resClinic.data
@@ -85,6 +85,27 @@ const fetchAllClinic = () => {
                 text1: "Error",
                 text2: "Có lỗi xảy ra. Vui lòng thử lại sau"
             })
+        }
+    }
+}
+
+
+export const fetchGenderStart = () => {
+    return async (dispatch) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_INFO_START
+            })
+
+            let res = await FUNCTION.getAllCodeService('GENDER')
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_GENDER_SUCCESS,
+                    payload: res.data
+                })
+            }
+        } catch (e) {
+            console.log("Fetch data failed", e)
         }
     }
 }

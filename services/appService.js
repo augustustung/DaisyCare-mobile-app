@@ -25,11 +25,7 @@ const getAllClinics = () => {
 }
 
 const getDetailClinic = (id) => {
-    return axios.get('/api/get-detail-clinic-by-id', {
-        data: {
-            id: id
-        }
-    })
+    return axios.get(`/api/get-detail-clinic-by-id?id=${id}`)
 }
 
 const getTopSpecialties = (limit) => {

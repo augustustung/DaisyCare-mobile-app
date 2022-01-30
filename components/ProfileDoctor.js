@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { getProfileDoctorById } from '../services/index'
-import NumberFormat from 'react-number-format';
 import _ from 'lodash';
 import IonIcon from 'react-native-vector-icons/Ionicons'
 import moment from 'moment';
@@ -9,6 +8,7 @@ import {
 } from 'react-native';
 import { ColorConst } from '../ultis/Constant'
 import HTMLView from 'react-native-htmlview';
+import { currencyFormat } from '../ultis';
 
 function ProfileDoctor({
   doctorId, isShowDoctorDescription,
@@ -36,7 +36,6 @@ function ProfileDoctor({
         result = res.data
       }
     }
-
     return result
   }
 
@@ -69,62 +68,64 @@ function ProfileDoctor({
   let name = dataProfile?.lastName + " " + dataProfile?.firstName || ""
   let priceVi = dataProfile?.Doctor_Info?.priceData?.valueVi || ""
 
-  return (
-    <View>
-      <View style={styles.introDoctor}>
-        <Image
-          source={{ uri: dataProfile.image ? dataProfile.image : "" }}
-          style={styles.contentLeft}
-        />
+  if (dataProfile && Object.keys(dataProfile).length)
+    return (
+      <View>
+        <View style={styles.introDoctor}>
+          <Image
+            source={{ uri: dataProfile.image ? dataProfile.image : "" }}
+            style={styles.contentLeft}
+          />
 
-        <View style={styles.contentRight}>
-          <View style={styles.up}>
+          <View style={styles.contentRight}>
+            <View style={styles.up}>
+              <Text>
+                {name}
+              </Text>
+            </View>
+
+            <View style={styles.down}>
+              {
+                isShowDoctorDescription ? (
+                  <HTMLView
+                    value={dataProfile?.Markdown?.description || "<p></p>"}
+                  />
+                ) : renderTimeBooking(dataTime)
+              }
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.pfBtnViewMore}>
+          <View style={styles.detailDoctorLocation}>
+            <IonIcon name="location-outline" size={20} color={ColorConst.DEEP_GREEN} />
+            <Text>{getProvinceName()}</Text>
+          </View>
+          {isShowLink && (
+            <TouchableOpacity onPress={() => navigation.navigate("DetailDoctor", doctorId)}>
+              <Text>Xem thêm</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+        <View style={styles.line} />
+
+
+        {isShowPrice && (
+          <View className="price">
             <Text>
-              {name}
+              Giá khám: {"  "}
+              <Text style={{
+                color: "#333"
+              }}>
+                {currencyFormat(priceVi || 0)}
+              </Text>
             </Text>
           </View>
-
-          <View style={styles.down}>
-            {
-              isShowDoctorDescription ? (
-                <HTMLView
-                  value={dataProfile?.Markdown?.description || "<p></p>"}
-                />
-              ) : renderTimeBooking(dataTime)
-            }
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.pfBtnViewMore}>
-        <View style={styles.detailDoctorLocation}>
-          <IonIcon name="location-outline" size={20} color={ColorConst.DEEP_GREEN} />
-          <Text>{getProvinceName()}</Text>
-        </View>
-        {isShowLink && (
-          <TouchableOpacity onPress={() => navigation.navigate("DetailDoctor", doctorId)}>
-            <Text>Xem thêm</Text>
-          </TouchableOpacity>
         )}
       </View>
-      <View style={styles.line} />
+    );
 
-
-      {isShowPrice && (
-        <View className="price">
-          Giá khám: {"  "}
-          <NumberFormat
-            value={priceVi}
-            displayType='text'
-            thousandSeparator={true}
-            suffix={'vnđ'}
-            style={{ color: "#333" }}
-          />
-        </View>
-      )}
-    </View>
-  );
-
+  return <View />
 }
 
 export default ProfileDoctor
