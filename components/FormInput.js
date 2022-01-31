@@ -3,10 +3,9 @@ import {
     View,
     TextInput,
     StyleSheet,
-    Text,
-    Image
+    Text
 } from 'react-native'
-import { SCREEN_HEIGHT, SCREEN_WIDTH, scaleV, scaleH } from '../ultis'
+import { SCREEN_HEIGHT, scaleV, scaleH } from '../ultis'
 import { ColorConst } from '../ultis'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 

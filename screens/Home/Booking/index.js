@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import ProfileDoctor from '../../../components/ProfileDoctor';
 import { fetchGenderStart } from '../../../redux/actions'
-import CustomDropdownPicker from '../../../components/CustomDropDownPicker'
+import { CustomDropDownPicker } from '../../../components'
 import { postBookingAppointment } from '../../../services'
 import _ from 'lodash';
 import moment from 'moment';
@@ -10,7 +10,9 @@ import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import styles from './booking.style'
 import SafeContainer from '../../../components/SafeContainer';
 import CustomHeader from '../../../components/CustomHeader';
-import { headerLeft } from '../../../ultis';
+import { headerLeft, scaleH, scaleV } from '../../../ultis';
+import { FormInput } from '../../../components/FormInput'
+import DatePicker from 'react-native-date-picker'
 
 class BookingScreen extends Component {
   constructor(props) {
@@ -26,15 +28,20 @@ class BookingScreen extends Component {
       birthday: "",
       gender: "",
       selectedGender: "",
-      timeType: '',
-      listGender: [],
-      isLoading: false
+      listGender: [
+        { label: 'Nam', value: 'M' },
+        { label: 'Nữ', value: 'F' },
+        { label: "Khác", value: "O" }
+      ],
+      isLoading: false,
+      open: false,
+      openDatePicker: false
     }
   }
 
   async componentDidMount() {
     await this.props.fetchGender()
-    const { user, genders } = this.props
+    const { user } = this.props
 
     if (user && !_.isEmpty(user)) {
       this.setState({
@@ -44,45 +51,20 @@ class BookingScreen extends Component {
         email: user.email,
         address: user.address,
         birthday: user.birthday,
-        selectedGender: this.buildFirstGenderSelect(genders)
+        selectedGender: user.gender
       })
     }
   }
 
   async componentDidUpdate(prevProps) {
-    const { genders, dataSchedule } = this.props
+    const { genders, user } = this.props
     if (prevProps.genders !== genders) {
       this.setState({
         listGender: this.buildDataGender(genders),
-        timeType: dataSchedule?.timeType || undefined,
-        selectedGender: this.buildFirstGenderSelect(genders)
+        selectedGender: user.gender
       })
 
     }
-  }
-
-  buildFirstGenderSelect = (genders) => {
-    let result = {}
-    for (let i = 0; i < genders.length; i++) {
-      if (genders[i].keyMap === this.props.user.gender) {
-        result.value = genders[i].keyMap;
-        result.label = genders[i].valueVi
-        break
-      }
-    }
-
-    return result
-  }
-
-  onChangeText = (e) => {
-    const { value, name } = e.target
-    let copyState = this.state
-    copyState[name] = value
-    this.setState({ ...copyState })
-  }
-
-  handleChangeDayPicker = (date) => {
-    this.setState({ birthday: date[0] })
   }
 
   buildDataGender = (data) => {
@@ -102,10 +84,6 @@ class BookingScreen extends Component {
     return result
   }
 
-  handleChangeSelect = async (selectedGender) => {
-    this.setState({ selectedGender })
-  }
-
   validateInput = () => {
     const valid = [
       "firstName",
@@ -115,13 +93,13 @@ class BookingScreen extends Component {
       "address",
       "reason",
       "birthday",
-      "selectedGender",
-      "timeType",
+      "selectedGender"
     ]
 
     for (let i = 0; i < valid.length; i++) {
       if (!this.state[valid[i]]) {
         Alert.alert("Vui lòng điền thông tin")
+        console.log(valid[i])
         return false
       }
     }
@@ -138,11 +116,10 @@ class BookingScreen extends Component {
       address,
       reason,
       birthday,
-      selectedGender,
-      timeType
+      selectedGender
     } = this.state
 
-    const { dataSchedule } = this.props
+    const { dataSchedule } = this.props.route.params
 
     if (!this.validateInput()) return
     this.setState({
@@ -164,14 +141,17 @@ class BookingScreen extends Component {
       birthday: formattedDate,
       doctorId: this.props.doctorId,
       gender: selectedGender.value,
-      timeType: timeType,
+      timeType: this?.props?.route?.params?.dataSchedule?.timeType || "T1",
       language: 'vi',
       timeString: timeString,
       doctorName: doctorName
     })
 
     if (res && res.errCode === 0) {
-      Alert.alert("Quý khách vui lòng kiểm tra email để hoàn tất đặt lịch!")
+      Alert.alert("Quý khách vui lòng kiểm tra email để hoàn tất đặt lịch!", "", [{
+        text: "OK",
+        onPress: () => this.props.navigation.goBack(),
+      }])
       this.setState({
         isLoading: false
       })
@@ -203,6 +183,24 @@ class BookingScreen extends Component {
     return ''
   }
 
+  setOpen = (open) => {
+    this.setState({
+      open
+    });
+  }
+
+  setValue = (callback) => {
+    this.setState(state => ({
+      selectedGender: callback(state.selectedGender)
+    }));
+  }
+
+  setListItem = (callback) => {
+    this.setState(state => ({
+      listGender: callback(state.listGender)
+    }));
+  }
+
   render() {
     const { navigation } = this.props
     const { doctorId, dataSchedule } = this.props.route.params
@@ -216,7 +214,9 @@ class BookingScreen extends Component {
       birthday,
       listGender,
       selectedGender,
-      isLoading
+      isLoading,
+      open,
+      openDatePicker
     } = this.state
 
     return (
@@ -224,13 +224,9 @@ class BookingScreen extends Component {
         <ScrollView>
           <CustomHeader headerLeft={() => headerLeft({ navigation: navigation, routeName: 'Đặt lịch khám' })} />
 
-          <View style={styles.bookingModalContent}>
-            <View style={styles.bookingModalHeader}>
-              <Text style={styles.left}>Đặt lịch khám</Text>
-            </View>
-
-            <View className="booking-modal-body container">
-              <View className="doctor-info">
+          <View>
+            <View>
+              <View style={styles.doctorInfo}>
                 <ProfileDoctor
                   doctorId={doctorId}
                   isShowDoctorDescription={false}
@@ -239,107 +235,102 @@ class BookingScreen extends Component {
                   isShowPrice={true}
                 />
               </View>
-              {/* 
-                            <View className='row'>
-                                <View className="col-6 form-group">
-                                    <Text>
-                                        <FormattedMessage id="manage-user.last-name" />
-                                    </Text>
-                                    <input
-                                        className="form-control"
-                                        name="lastName"
-                                        value={lastName}
-                                        onChange={this.onChangeText}
-                                    />
-                                </View>
+              <View style={styles.info}>
+                <FormInput
+                  uri="user-o"
+                  value={lastName}
+                  setValue={(text) => this.setState({ lastName: text })}
+                  placeholder="Họ"
+                  marginBottom={scaleV(12)}
+                />
 
-                                <View className="col-6 form-group">
-                                    <label>
-                                        <FormattedMessage id="manage-user.first-name" />
-                                    </label>
-                                    <input
-                                        className="form-control"
-                                        name="firstName"
-                                        value={firstName}
-                                        onChange={this.onChangeText}
-                                    />
-                                </View>
+                <FormInput
+                  uri="user-o"
+                  value={firstName}
+                  setValue={(text) => this.setState({ firstName: text })}
+                  placeholder="Tên"
+                  marginBottom={scaleV(12)}
+                />
 
-                                <View className="col-6 form-group">
-                                    <label>
-                                        <FormattedMessage id="manage-user.phone-number" />
-                                    </label>
-                                    <input
-                                        className="form-control"
-                                        name="phoneNumber"
-                                        value={phoneNumber}
-                                        onChange={this.onChangeText}
-                                    />
-                                </View>
+                <FormInput
+                  uri="phone"
+                  placeholder="Số điện thoại"
+                  value={phoneNumber}
+                  marginBottom={scaleV(16)}
+                  keyboardType="numeric"
+                  setValue={(text) => this.setState({ phoneNumber: text })}
+                />
 
-                                <View className="col-6 form-group">
-                                    <label>Email</label>
-                                    <input
-                                        className="form-control"
-                                        name="email"
-                                        value={email}
-                                        onChange={this.onChangeText}
-                                    />
-                                </View>
+                <FormInput
+                  uri="user-o"
+                  placeholder="Email"
+                  value={email}
+                  marginBottom={scaleV(16)}
+                  keyboardType='email-address'
+                  setValue={(text) => this.setState(prev => ({ ...prev, email: text }))}
+                />
 
-                                <View className="col-6 form-group">
-                                    <label>
-                                        <FormattedMessage id="manage-user.address" />
-                                    </label>
-                                    <input
-                                        className="form-control"
-                                        name="address"
-                                        value={address}
-                                        onChange={this.onChangeText}
-                                    />
-                                </View>
+                <FormInput
+                  uri="home"
+                  placeholder="Địa chỉ"
+                  value={address}
+                  marginBottom={scaleV(16)}
+                  setValue={(text) => this.setState(prev => ({ ...prev, address: text }))}
+                />
 
-                                <View className="col-6 form-group">
-                                    <label>
-                                        <FormattedMessage id="manage-user.gender" />
-                                    </label>
-                                    <Select
-                                        value={selectedGender}
-                                        onChange={this.handleChangeSelect}
-                                        options={listGender}
-                                    />
-                                </View>
+                <View style={{ marginHorizontal: scaleH(16) }}>
+                  <CustomDropDownPicker
+                    placeholder="Chọn giới tính: "
+                    open={open}
+                    selectedValue={selectedGender}
+                    listItems={listGender}
+                    setOpen={this.setOpen}
+                    setSelectedValue={this.setValue}
+                    setItems={this.setListItem}
+                    disableSearch
+                  />
+                </View>
 
-                                <View className="col-6 form-group">
-                                    <label>
-                                        <FormattedMessage id="manage-user.birthday" />
-                                    </label>
-                                    <input
-                                        className="form-control"
-                                        name="birthday"
-                                        value={birthday}
-                                        onChange={this.onChangeText}
-                                    />
-                                </View>
+                <FormInput
+                  uri="calendar"
+                  placeholder="Ngày sinh"
+                  value={birthday}
+                  marginBottom={scaleV(16)}
+                  onFocus={() => this.setState({ openDatePicker: true })}
+                  setValue={() => { }}
+                />
 
-                                <View className="col-6 form-group">
-                                    <label>
-                                        <FormattedMessage id="manage-user.reason" />
-                                    </label>
-                                    <input
-                                        className="form-control"
-                                        name="reason"
-                                        value={reason}
-                                        onChange={this.onChangeText}
-                                    />
-                                </View>
-                            </View> */}
+                <DatePicker
+                  modal mode="date"
+                  open={openDatePicker}
+                  date={birthday ? new Date(birthday) : new Date()}
+                  onConfirm={(date) => {
+                    this.setState({
+                      openDatePicker: false,
+                      birthday: moment(date).format("DD/MM/YYYY")
+                    })
+                  }}
+                  onCancel={() => {
+                    this.setState({
+                      openDatePicker: false
+                    })
+                  }}
+                />
+
+                <FormInput
+                  uri="question-circle"
+                  placeholder="Lý do khám"
+                  value={reason}
+                  marginBottom={scaleV(16)}
+                  setValue={(text) => this.setState(prev => ({ ...prev, reason: text }))}
+                />
+              </View>
             </View>
 
-            <View className="booking-modal-footer">
-              <TouchableOpacity className="btn-confirm" onClick={this.handleSubmit}><Text>Đặt lịch</Text></TouchableOpacity>
+            <View style={styles.bookingModalFooter}>
+              <TouchableOpacity style={styles.btnConfirm} onPress={this.handleSubmit}><Text>Đặt lịch</Text></TouchableOpacity>
 
-              <TouchableOpacity className="btn-cancel">
+              <TouchableOpacity style={{ padding: 10 }}>
                 <Text>Huỷ</Text>
               </TouchableOpacity>
             </View>
