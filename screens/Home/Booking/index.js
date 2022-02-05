@@ -217,7 +217,6 @@ class BookingScreen extends Component {
       birthday,
       listGender,
       selectedGender,
-      isLoading,
       open,
       openDatePicker
     } = this.state
@@ -354,7 +353,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchGender: () => dispatch(fetchGenderStart()),
-    updateUserInfo: () => dispatch(updateUserInfo())
+    updateUserInfo: (data) => dispatch(updateUserInfo(data))
   };
 };
 
