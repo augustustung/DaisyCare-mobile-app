@@ -16,3 +16,8 @@ export const processActionFailed = () => ({
 export const processLogout = () => ({
     type: actionTypes.PROCESS_LOGOUT
 })
+
+export const updateUserInfo = (payload) => ({
+    type: actionTypes.UPDATE_USER_INFO,
+    payload: payload
+})

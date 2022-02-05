@@ -38,6 +38,15 @@ const userReducer = (state = initialState, action) => {
                 isLoading: false
             }
         }
+        case actionTypes.UPDATE_USER_INFO: {
+            return {
+                ...state,
+                userInfo: {
+                    ...state.userInfo,
+                    ...action.payload
+                }
+            }
+        }
         default:
             return state;
     }

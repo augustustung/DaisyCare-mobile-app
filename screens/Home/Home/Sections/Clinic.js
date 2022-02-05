@@ -19,7 +19,7 @@ function Clinic({
     const [dataClinic, setDataClinic] = useState([])
 
     useEffect(() => {
-        if(topClinics && topClinics.length > 0) {
+        if (topClinics && topClinics.length > 0) {
             setDataClinic(topClinics)
         }
     }, [topClinics])
@@ -37,7 +37,7 @@ function Clinic({
     return (
         <SafeContainer>
             <View style={styles.sectionContainer}>
-                <ButtonTag title="Cơ sở y tế nổi bật" btnTitle="Xem thêm" OnPress={() => navigation.navigate('Clinic')}/>
+                <ButtonTag title="Cơ sở y tế nổi bật" btnTitle="Xem thêm" OnPress={() => navigation.navigate('Clinic')} />
 
                 <View style={styles.sectionFooter}>
                     <FlatList

@@ -31,7 +31,6 @@ function RegisterScreen({
     const dispatch = useDispatch()
     const [gender, setGender] = useState(null)
     const [sercurityEntry, setSercurityEntry] = useState(true)
-    const [loading, setLoading] = useState(true)
     const [open, setOpen] = useState(false)
     const [items, setItems] = useState([
         { label: 'Nam', value: 'M' },
@@ -69,13 +68,13 @@ function RegisterScreen({
 
     const _onRegister = async () => {
         const validate = validateInfo()
-        if(!validate)
+        if (!validate)
             return
-        
+
         let firstName = ''
         let lastName = ''
         const arrName = fullName.split(" ")
-        if(arrName.length > 2) {
+        if (arrName.length > 2) {
             firstName = arrName[0]
             lastName = arrName.filter(item => item !== firstName).join(',')
         } else {
@@ -110,6 +109,14 @@ function RegisterScreen({
                 position: 'top',
                 text1: 'Đăng ký thành công!',
                 text2: 'Chào mừng đến với Daisy Care 👋',
+                autoHide: true,
+            })
+        } else if (res.errCode === 2) {
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Email đã được sử dụng!',
+                text2: '',
                 autoHide: true,
             })
         } else {
@@ -192,12 +199,13 @@ function RegisterScreen({
                             value={phoneNumber}
                             marginBottom={scaleV(16)}
                             keyboardType="numeric"
-                            setValue={(text) => setUserInfo({ phoneNumber: text })}
+                            setValue={(text) => setUserInfo(prev => ({ ...prev, phoneNumber: text }))}
                         />
 
                         <CustomDropDownPicker
                             placeholder="Chọn giới tính: "
                             open={open}
+                            disableSearch
                             selectedValue={gender}
                             listItems={items}
                             setOpen={setOpen}

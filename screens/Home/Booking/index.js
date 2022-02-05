@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import ProfileDoctor from '../../../components/ProfileDoctor';
-import { fetchGenderStart } from '../../../redux/actions'
+import { fetchGenderStart, updateUserInfo } from '../../../redux/actions'
 import { CustomDropDownPicker } from '../../../components'
 import { postBookingAppointment } from '../../../services'
 import _ from 'lodash';
@@ -130,7 +130,7 @@ class BookingScreen extends Component {
     let timeString = this.buildTimeBooking(dataSchedule)
     let doctorName = this.buildDoctorName(dataSchedule)
 
-    let res = await postBookingAppointment({
+    const dataUser = {
       firstName: firstName,
       lastName: lastName,
       phoneNumber: phoneNumber,
@@ -145,7 +145,10 @@ class BookingScreen extends Component {
       language: 'vi',
       timeString: timeString,
       doctorName: doctorName
-    })
+    }
+    let res = await postBookingAppointment(dataUser)
+
+    this.props.updateUserInfo(dataUser)
 
     if (res && res.errCode === 0) {
       Alert.alert("Quý khách vui lòng kiểm tra email để hoàn tất đặt lịch!", "", [{
@@ -350,7 +353,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchGender: () => dispatch(fetchGenderStart())
+    fetchGender: () => dispatch(fetchGenderStart()),
+    updateUserInfo: () => dispatch(updateUserInfo())
   };
 };
 

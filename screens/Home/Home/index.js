@@ -25,7 +25,7 @@ function HomeScreen({
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerTitle: () => <Image style={{ resizeMode: 'contain', height: "100%" }} source={require("../../../assets/logo.png")} />,
+            headerTitle: () => <Image style={{ width: 100, height: "100%", resizeMode: 'center' }} source={require("../../../assets/logoSmall.png")} />,
             headerLeft: () => (
                 <View style={{ justifyContent: 'center', height: '100%' }}>
                     <FontAwesome
@@ -51,9 +51,9 @@ function HomeScreen({
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Banner />
                 <Specialty navigation={navigation} />
-                <Clinic navigation={navigation}/>
-                <OutstandingDoctor navigation={navigation}/>
-                <Covid navigation={navigation}/>
+                <Clinic navigation={navigation} />
+                <OutstandingDoctor navigation={navigation} />
+                <Covid navigation={navigation} />
                 <HomeFooter />
             </ScrollView>
         </Animatable.View>
