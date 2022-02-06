@@ -7,7 +7,7 @@ import moment from 'moment'
 
 const Covid = () => {
   const [infoCOVID, setInfoCOVID] = useState(null)
-  
+
   const fetchDataCOVID = async () => {
     await axios.get(`https://api.covid19api.com/dayone/country/vietnam`)
       .then((res) => {
@@ -20,12 +20,12 @@ const Covid = () => {
 
   const getName = () => {
     return infoCOVID ?
-      moment(new Date(infoCOVID.Date)).locale('vi').format("LLL") : '0'
+      moment(new Date(infoCOVID.Date)).format("LLL") : '0'
   }
 
   useEffect(() => {
     fetchDataCOVID()
-  },[])
+  }, [])
 
   return (
     <SafeContainer>
@@ -34,25 +34,25 @@ const Covid = () => {
           <Text>Việt Nam {"\n"}{getName()}</Text>
         </View>
         <View style={styles.sectionItems}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={[styles.borderLeft, { backgroundColor: "red" }]} />
             <Text style={styles.content}>Tử vong</Text>
           </View>
           <Text style={styles.content}>{infoCOVID && infoCOVID.Deaths}</Text>
         </View>
 
-        
+
         <View style={styles.sectionItems}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={[styles.borderLeft, { backgroundColor: "yellow" }]} />
             <Text style={styles.content}>Nhiễm bệnh</Text>
           </View>
           <Text style={styles.content}>{infoCOVID && infoCOVID.Confirmed}</Text>
         </View>
 
-        
+
         <View style={styles.sectionItems}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={[styles.borderLeft, { backgroundColor: "green" }]} />
             <Text style={styles.content}>Hồi phục</Text>
           </View>

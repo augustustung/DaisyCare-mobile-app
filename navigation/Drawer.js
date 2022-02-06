@@ -5,13 +5,12 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {
-  View,
-  Image
+  View
 } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Feather from 'react-native-vector-icons/Feather'
 import Home from '../screens/Home/Home';
-import Message from '../screens/Home/Message';
+// import Message from '../screens/Home/Message';
 import { styles } from './style.drawer';
 import { processLogout } from '../redux/actions'
 import { useDispatch } from 'react-redux';
@@ -62,7 +61,7 @@ function CustomDrawerContent(props) {
                   />
                 )}
                 label="Tin nhắn"
-                onPress={() => props.navigation.navigate('MessageScreen')}
+                onPress={() => alert("Tính năng đang phát triển") /*props.navigation.navigate('MessageScreen')*/}
               />
               <DrawerItem
                 icon={({ color, size }) => (
@@ -73,7 +72,7 @@ function CustomDrawerContent(props) {
                   />
                 )}
                 label="Lịch đặt"
-                onPress={() => props.navigation.navigate('BookmarkScreen')}
+                onPress={() => alert("Tính năng đang phát triển") /*props.navigation.navigate('BookmarkScreen')*/}
               />
               <DrawerItem
                 icon={({ color, size }) => (
@@ -84,7 +83,7 @@ function CustomDrawerContent(props) {
                   />
                 )}
                 label="Cài đặt"
-                onPress={() => props.navigation.navigate('SettingsScreen')}
+                onPress={() => alert("Tính năng đang phát triển") /*props.navigation.navigate('SettingsScreen')*/}
               />
             </View>
           </View>
@@ -110,7 +109,7 @@ function MyDrawer() {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="HomeScreen" component={Home} />
-      <Drawer.Screen name="MessageScreen" component={Message} />
+      {/* <Drawer.Screen name="MessageScreen" component={Message} /> */}
     </Drawer.Navigator>
   );
 }

@@ -341,7 +341,7 @@ class BookingScreen extends Component {
             <View style={styles.bookingModalFooter}>
               <TouchableOpacity style={styles.btnConfirm} onPress={this.handleSubmit}><Text>Đặt lịch</Text></TouchableOpacity>
 
-              <TouchableOpacity style={{ padding: 10 }}>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{ padding: 10 }}>
                 <Text>Huỷ</Text>
               </TouchableOpacity>
             </View>
