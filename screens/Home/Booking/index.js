@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import ProfileDoctor from '../../../components/ProfileDoctor';
 import { fetchGenderStart, updateUserInfo } from '../../../redux/actions'
 import { CustomDropDownPicker } from '../../../components'
-import { postBookingAppointment } from '../../../services'
+import { editUser, postBookingAppointment } from '../../../services'
 import _ from 'lodash';
 import moment from 'moment';
 import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -147,8 +147,16 @@ class BookingScreen extends Component {
       doctorName: doctorName
     }
     let res = await postBookingAppointment(dataUser)
-
-    this.props.updateUserInfo(dataUser)
+    Alert.alert(birthday)
+    this.props.updateUserInfo({
+      ...dataUser,
+      birthday: birthday
+    })
+    editUser({
+      ...dataUser,
+      birthday: birthday,
+      id: this.props.user.id
+    })
 
     if (res && res.errCode === 0) {
       Alert.alert("Quý khách vui lòng kiểm tra email để hoàn tất đặt lịch!", "", [{
@@ -220,6 +228,7 @@ class BookingScreen extends Component {
       open,
       openDatePicker
     } = this.state
+    console.log(this.state.selectedGender);
 
     return (
       <SafeContainer>

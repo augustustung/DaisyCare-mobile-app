@@ -56,6 +56,10 @@ export const postBookingAppointment = (data) => {
     return axios.post(`/api/patient-book-schedule`, data)
 }
 
+export const editUser = (userInfo) => {
+    return axios.put('/api/edit-user', userInfo)
+}
+
 // export const postVerifyBooking = (data) => {
 //     return axios.post(`/api/verifying-book-appointment`, data)
 // }
