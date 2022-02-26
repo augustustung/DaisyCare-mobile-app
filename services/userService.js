@@ -21,24 +21,9 @@ export {
     handleLogout
 }
 
-
-
-
-// export const getAllDoctors = () => {
-//     return axios.get("/api/get-all-doctors")
-// }
-
-// export const saveDoctorInfoService = (data) => {
-//     return axios.post(`/api/save-info-doctors`, data)
-// }
-
 export const getDetailInfoDoctor = (id) => {
     return axios.get(`/api/get-detail-doctors-by-id?id=${id}`)
 }
-
-// export const saveBulkSchedule = (data) => {
-//     return axios.post(`/api/bulk-create-schedule`, data)
-// }
 
 export const getScheduleDoctorByDate = (doctorId, date) => {
     return axios.get(`/api/get-schedule-doctors-by-date?doctorId=${doctorId}&date=${date}`)
@@ -60,26 +45,10 @@ export const editUser = (userInfo) => {
     return axios.put('/api/edit-user', userInfo)
 }
 
-// export const postVerifyBooking = (data) => {
-//     return axios.post(`/api/verifying-book-appointment`, data)
-// }
+export const getAllScheduled = (userId) => {
+    return axios.post('/api/get-user-schedules', { userId: userId })
+}
 
-// export const createNewSpecialty = (data) => {
-//     return axios.post(`/api/create-a-new-specialty`, data)
-// }
-
-// export const getAllSpecialties = () => {
-//     return axios.get("/api/get-all-specialties")
-// }
-
-// export const createNewClinic = (data) => {
-//     return axios.post(`/api/create-a-new-clinic`, data)
-// }
-
-// export const getAllClinics = () => {
-//     return axios.get("/api/get-all-clinics")
-// }
-
-// export const getDetailSpecialtyById = (data) => {
-//     return axios.get(`/api/get-detail-specialty-by-id/?id=${data.id}&location=${data.location}`)
-// }
+export const userCancelSchedule = (scheduleId) => {
+    return axios.post('/api/user-cancel-schedule', { scheduleId: scheduleId })
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
     Text,
     View,
@@ -12,22 +12,14 @@ import { styles } from './SectionStyle'
 import ButtonTag from '../../../../components/ButtonTag'
 
 function Specialty({
-    topSpecialty,
+    topSpecialty: dataSpecialty,
     navigation
 }) {
-    const [dataSpecialty, setDataSpecialty] = useState([])
-    
-
-    useEffect(() => {
-        if(topSpecialty && topSpecialty.length > 0) {
-            setDataSpecialty(topSpecialty)
-        }
-    },[topSpecialty])
 
     const renderItem = (item) => (
         <TouchableOpacity onPress={() => navigation.navigate("DetailSpecialty", item.id)} style={styles.sectionCard}>
             <Image
-                source={{ uri: item.image }}
+                source={{ uri: item?.image || "" }}
                 style={styles.cardImg}
             />
             <Text numberOfLines={1} style={styles.cardTitle}>{item.nameVi}</Text>
@@ -57,10 +49,4 @@ const mapStateToProps = (state) => ({
     topSpecialty: state.app.homeData.topSpecialty
 });
 
-const mapDispatchToProps = dispatch => ({
-
-});
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty)
+export default connect(mapStateToProps, null)(Specialty)

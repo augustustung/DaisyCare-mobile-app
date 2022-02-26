@@ -45,7 +45,7 @@ const AllClinic = ({
         return (
             <View style={styles.sectionItem}>
                 <Image
-                    source={{ uri: item.image }}
+                    source={{ uri: item?.image || "" }}
                     style={styles.sectionItemImage}
                 />
                 <Text numberOfLines={3} style={styles.sectionItemTitle}>

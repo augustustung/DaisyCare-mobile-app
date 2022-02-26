@@ -73,7 +73,7 @@ function ProfileDoctor({
       <View>
         <View style={styles.introDoctor}>
           <Image
-            source={{ uri: dataProfile.image ? dataProfile.image : "" }}
+            source={{ uri: dataProfile?.image ? dataProfile.image : "" }}
             style={styles.contentLeft}
           />
 

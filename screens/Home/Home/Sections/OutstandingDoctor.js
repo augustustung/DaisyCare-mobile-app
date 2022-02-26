@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react'
+import React from 'react'
 import {
     Text,
     View,
@@ -13,15 +13,9 @@ import { EmptyComponent } from '../../../../ultis'
 import ButtonTag from '../../../../components/ButtonTag'
 
 function OutStandingDoctor({
-    topDoctor,
+    topDoctor: topDoctorHome,
     navigation
 }) {
-    const [topDoctorHome, setTopDoctorHome] = useState([])
-
-    useEffect(() => {
-        if (topDoctor && topDoctor.length > 0)
-            setTopDoctorHome(topDoctor);
-    },[topDoctor])
 
     const renderDoctor = (item) => {
         const doctorName = ` ${item.lastName} ${item.firstName}`
@@ -29,7 +23,7 @@ function OutStandingDoctor({
             <TouchableOpacity onPress={() => navigation.navigate('DetailDoctor', item.id)} style={styles.sectionCard}>
                 <Image
                     source={{
-                        uri: item.image
+                        uri: item?.image || ""
                     }}
                     style={styles.avartar}
                 />
@@ -47,7 +41,7 @@ function OutStandingDoctor({
                 <FlatList
                     horizontal={true}
                     data={topDoctorHome}
-                    keyExtractor={(obj) => Math.random()}
+                    keyExtractor={() => Math.random()}
                     renderItem={({ item }) => renderDoctor(item)}
                     showsHorizontalScrollIndicator={false}
                     ListEmptyComponent={EmptyComponent("Hệ thống đang bảo trì")}
@@ -62,8 +56,4 @@ const mapStateToProps = state => ({
     topDoctor: state.app.homeData.topDoctor
 })
 
-const mapDispatchToProps = dispatch => ({
-
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor)
+export default connect(mapStateToProps, null)(OutStandingDoctor)

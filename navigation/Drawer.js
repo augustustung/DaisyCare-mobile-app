@@ -14,6 +14,7 @@ import Home from '../screens/Home/Home';
 import { styles } from './style.drawer';
 import { processLogout } from '../redux/actions'
 import { useDispatch } from 'react-redux';
+import BookingSchedule from '../screens/BookingSchedule';
 
 const Drawer = createDrawerNavigator();
 
@@ -72,7 +73,7 @@ function CustomDrawerContent(props) {
                   />
                 )}
                 label="Lịch đặt"
-                onPress={() => alert("Tính năng đang phát triển") /*props.navigation.navigate('BookmarkScreen')*/}
+                onPress={() => props.navigation.navigate('BookmarkScreen')}
               />
               <DrawerItem
                 icon={({ color, size }) => (
@@ -109,7 +110,7 @@ function MyDrawer() {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="HomeScreen" component={Home} />
-      {/* <Drawer.Screen name="MessageScreen" component={Message} /> */}
+      <Drawer.Screen name="BookmarkScreen" component={BookingSchedule} />
     </Drawer.Navigator>
   );
 }

@@ -48,7 +48,7 @@ const AllDoctor = ({
             <TouchableOpacity style={styles.sectionItem} onPress={() => navigation.navigate("DetailDoctor", item.id)}>
                 <View>
                     <Image
-                        source={{ uri: item.image }}
+                        source={{ uri: item?.image || "" }}
                         style={styles.sectionItemAvatar}
                     />
                     <View style={{flexDirection: 'row', marginTop:4}}>

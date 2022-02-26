@@ -73,7 +73,7 @@ function DetailSpecialty({
       <ScrollView>
         <CustomHeader headerLeft={() => headerLeft({ navigation: navigation, routeName: 'Chi tiết chuyên khoa' })} />
         <ImageBackground
-          source={{ uri: dataSpecialty.image || "" }}
+          source={{ uri: dataSpecialty?.image || "" }}
           style={styles.imageBg}
         >
           <View style={styles.imageBgMask}>

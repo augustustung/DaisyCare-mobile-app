@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import {
     Text,
     View,
@@ -14,20 +14,13 @@ import SafeContainer from '../../../../components/SafeContainer'
 
 function Clinic({
     navigation,
-    topClinics
+    topClinics: dataClinic
 }) {
-    const [dataClinic, setDataClinic] = useState([])
-
-    useEffect(() => {
-        if (topClinics && topClinics.length > 0) {
-            setDataClinic(topClinics)
-        }
-    }, [topClinics])
 
     const renderClinic = (item) => (
         <TouchableOpacity onPress={() => navigation.navigate('DetailClinic', item.id)} style={styles.sectionCard}>
             <Image
-                source={{ uri: item.image }}
+                source={{ uri: item?.image || "" }}
                 style={styles.cardImg}
             />
             <Text style={styles.cardTitle}>{item.nameVi}</Text>
@@ -60,8 +53,4 @@ const mapStateToProps = (state) => ({
     topClinics: state.app.homeData.topClinic
 });
 
-const mapDispatchToProps = dispatch => ({
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Clinic)
+export default connect(mapStateToProps, null)(Clinic)

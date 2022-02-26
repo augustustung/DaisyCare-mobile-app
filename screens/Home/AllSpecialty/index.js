@@ -46,7 +46,7 @@ const AllSpecialty = ({
         return (
             <TouchableOpacity onPress={() => navigation.navigate("DetailSpecialty", item.id)} style={styles.sectionItem}>
                 <Image
-                    source={{ uri: item.image }}
+                    source={{ uri: item?.image || "" }}
                     style={styles.sectionItemImage}
                 />
                 <Text style={styles.sectionItemTitle}>
