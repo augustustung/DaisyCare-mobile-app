@@ -5,7 +5,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {
-  View
+  View, Alert
 } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Feather from 'react-native-vector-icons/Feather'
@@ -62,7 +62,7 @@ function CustomDrawerContent(props) {
                   />
                 )}
                 label="Tin nhắn"
-                onPress={() => alert("Tính năng đang phát triển") /*props.navigation.navigate('MessageScreen')*/}
+                onPress={() => Alert.alert("Daisy Care", "Tính năng đang phát triển") /*props.navigation.navigate('MessageScreen')*/}
               />
               <DrawerItem
                 icon={({ color, size }) => (
@@ -84,7 +84,7 @@ function CustomDrawerContent(props) {
                   />
                 )}
                 label="Cài đặt"
-                onPress={() => alert("Tính năng đang phát triển") /*props.navigation.navigate('SettingsScreen')*/}
+                onPress={() => Alert.alert("Daisy Care", "Tính năng đang phát triển") /*props.navigation.navigate('SettingsScreen')*/}
               />
             </View>
           </View>

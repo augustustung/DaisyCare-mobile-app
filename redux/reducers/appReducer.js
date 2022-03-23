@@ -34,17 +34,22 @@ const appReducer = (state = initialState, action) => {
         case actionTypes.FETCH_ALL_SPECIALTY_SUCCESS:
             return {
                 ...state,
-                allSpecialty: action.payload
+                allSpecialty: action.payload,
+                isLoading: false
             }
         case actionTypes.FETCH_ALL_DOCTOR_SUCCESS:
             return {
                 ...state,
-                allDoctor: action.payload
+                allDoctor: action.payload,
+                isLoading: false
             }
         case actionTypes.FETCH_ALL_CLINIC:
+            console.log('is loadgasg');
+            console.log(state);
             return {
                 ...state,
-                allClinic: action.payload
+                allClinic: action.payload,
+                isLoading: false
             }
         case actionTypes.PROCESS_APP_ACTIONS_FAILED:
             return {
@@ -54,7 +59,8 @@ const appReducer = (state = initialState, action) => {
         case actionTypes.FETCH_GENDER_SUCCESS:
             return {
                 ...state,
-                genders: action.payload
+                genders: action.payload,
+                isLoading: false
             }
         default:
             return state;

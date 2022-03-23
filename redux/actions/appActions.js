@@ -34,7 +34,6 @@ const fetchHomeData = () => {
 
 const fetchAllSpecialty = () => {
     return async dispatch => {
-        dispatch({ type: actionTypes.PROCESS_APP_ACTIONS })
         const resSpecialty = await FUNCTION.getAllSpecialties()
         if (resSpecialty && resSpecialty.errCode === 0) {
             dispatch({
@@ -42,7 +41,6 @@ const fetchAllSpecialty = () => {
                 payload: resSpecialty.data
             })
         } else {
-            dispatch({ type: actionTypes.PROCESS_APP_ACTIONS_FAILED })
             Toast.show({
                 text1: "Error",
                 text2: "Có lỗi xảy ra. Vui lòng thử lại sau"
@@ -53,7 +51,6 @@ const fetchAllSpecialty = () => {
 
 const fetchAllDoctor = () => {
     return async dispatch => {
-        dispatch({ type: actionTypes.PROCESS_APP_ACTIONS })
         const resDoctor = await FUNCTION.getAllDoctor()
         if (resDoctor && resDoctor.errCode === 0) {
             dispatch({
@@ -61,7 +58,6 @@ const fetchAllDoctor = () => {
                 payload: resDoctor.data
             })
         } else {
-            dispatch({ type: actionTypes.PROCESS_APP_ACTIONS_FAILED })
             Toast.show({
                 text1: "Error",
                 text2: "Có lỗi xảy ra. Vui lòng thử lại sau"
@@ -72,7 +68,6 @@ const fetchAllDoctor = () => {
 
 const fetchAllClinic = () => {
     return async dispatch => {
-        dispatch({ type: actionTypes.PROCESS_APP_ACTIONS })
         const resClinic = await FUNCTION.getAllClinics()
         if (resClinic && resClinic.errCode === 0) {
             dispatch({
@@ -80,7 +75,6 @@ const fetchAllClinic = () => {
                 payload: resClinic.data
             })
         } else {
-            dispatch({ type: actionTypes.PROCESS_APP_ACTIONS_FAILED })
             Toast.show({
                 text1: "Error",
                 text2: "Có lỗi xảy ra. Vui lòng thử lại sau"

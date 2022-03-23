@@ -98,7 +98,7 @@ class BookingScreen extends Component {
 
     for (let i = 0; i < valid.length; i++) {
       if (!this.state[valid[i]]) {
-        Alert.alert("Vui lòng điền thông tin")
+        Alert.alert("Daisy Care", "Vui lòng điền thông tin")
         console.log(valid[i])
         return false
       }
@@ -147,7 +147,6 @@ class BookingScreen extends Component {
       doctorName: doctorName
     }
     let res = await postBookingAppointment(dataUser)
-    Alert.alert(birthday)
     this.props.updateUserInfo({
       ...dataUser,
       birthday: birthday
@@ -159,7 +158,7 @@ class BookingScreen extends Component {
     })
 
     if (res && res.errCode === 0) {
-      Alert.alert("Quý khách vui lòng kiểm tra email để hoàn tất đặt lịch!", "", [{
+      Alert.alert("Daisy Care", "Quý khách vui lòng kiểm tra email để hoàn tất đặt lịch!", [{
         text: "OK",
         onPress: () => this.props.navigation.goBack(),
       }])
@@ -168,7 +167,7 @@ class BookingScreen extends Component {
       })
     }
     else {
-      Alert.alert("Có lỗi xảy ra vui lòng thử lại sau!")
+      Alert.alert("Daisy Care", "Có lỗi xảy ra vui lòng thử lại sau!")
       this.setState({
         isLoading: false
       })
@@ -228,7 +227,6 @@ class BookingScreen extends Component {
       open,
       openDatePicker
     } = this.state
-    console.log(this.state.selectedGender);
 
     return (
       <SafeContainer>

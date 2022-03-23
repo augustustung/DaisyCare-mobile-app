@@ -17,10 +17,12 @@ import { scaleV } from '../../../ultis'
 import HomeFooter from './Sections/HomeFooter'
 import Covid from './Sections/Covid'
 import * as actions from '../../../redux/actions'
+import ProgressLoader from 'rn-progress-loader';
 
 function HomeScreen({
     navigation,
-    fetchHomeData
+    fetchHomeData,
+    isLoading
 }) {
 
     useLayoutEffect(() => {
@@ -40,7 +42,17 @@ function HomeScreen({
             headerStyle: { height: scaleV(70) }
         })
         fetchHomeData()
-    }, [])
+    }, [fetchHomeData])
+
+    if (isLoading) {
+			return (
+				<ProgressLoader
+				visible={isLoading}
+				isModal={true} isHUD={true}
+				hudColor={"#000000"}
+				color={"#FFFFFF"} />
+			)
+    }
 
     return (
         <Animatable.View
@@ -62,7 +74,8 @@ function HomeScreen({
 }
 
 const mapStateToProps = (state) => ({
-    userInfo: state.user.userInfo
+    userInfo: state.user.userInfo,
+    isLoading: state.app.isLoading
 });
 
 const mapDispatchToProps = dispatch => ({

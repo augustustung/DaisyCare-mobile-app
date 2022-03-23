@@ -10,14 +10,13 @@ import { styles } from '../style.home'
 import { CustomDropDownPicker } from '../../../components/CustomDropDownPicker'
 
 const AllSpecialty = ({
-    navigation
+    navigation, 
 }) => {
-    const [dataSpecialty, setDataSpecialty] = useState([])
     const [openDropdown, setOpenDropdown] = useState(false)
     const [selectedValue, setSelectedValue] = useState(null)
     const [items, setItems] = useState([])
     const dispatch = useDispatch()
-    const { allSpecialty } = useSelector(state => state.app)
+    const { allSpecialty: dataSpecialty } = useSelector(state => state.app)
 
     const buildDataPicker = (data) => {
         let arrData = []
@@ -36,11 +35,10 @@ const AllSpecialty = ({
     },[])
 
     useEffect(() => {
-        if(allSpecialty && allSpecialty.length > 0) {
-            setDataSpecialty(allSpecialty)
-            buildDataPicker(allSpecialty)
+        if(dataSpecialty && dataSpecialty.length > 0) {
+            buildDataPicker(dataSpecialty)
         }
-    },[allSpecialty])
+    },[dataSpecialty])
 
     const renderItem = ({ item }) => {
         return (

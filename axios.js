@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: "https://daisycare-backend.herokuapp.com",
+    baseURL: "https://daisycare-server.herokuapp.com",
     headers: {
         origin: "asfasfsfdaylamobileappguireqfsfddssfsfsdddeue^s##t123123123123123123123123123"
     }

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native'
 import React from 'react'
 import SafeContainer from '../../components/SafeContainer'
 import { useLayoutEffect } from 'react'
@@ -36,10 +36,10 @@ export default function BookingSchedule({ navigation }) {
   async function handleCancelSchedule(scheduleId) {
     const res = await userCancelSchedule(scheduleId)
     if (res && res === 'OK') {
-      alert("Huỷ lịch thành công")
+      Alert.alert("Daisy Care", "Huỷ lịch thành công")
       fetchData()
     } else {
-      alert("Có lỗi xảy ra, vui lòng thử lại sau!")
+      Alert.alert("Daisy Care", "Có lỗi xảy ra, vui lòng thử lại sau!")
     }
   }
 
