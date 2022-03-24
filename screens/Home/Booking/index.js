@@ -41,7 +41,6 @@ class BookingScreen extends Component {
   async componentDidMount() {
     await this.props.fetchGender()
     const { user } = this.props
-    console.log(this.props.route.params)
 
     if (user && !_.isEmpty(user)) {
       this.setState({
@@ -125,7 +124,6 @@ class BookingScreen extends Component {
       isLoading: true
     })
 
-    let formattedDate = new Date(birthday).getTime()
     let timeString = this.buildTimeBooking(dataSchedule)
     let doctorName = this.buildDoctorName(dataSchedule)
     const dataUser = {
@@ -136,7 +134,7 @@ class BookingScreen extends Component {
       address: address,
       reason: reason,
       date: dataSchedule.date,
-      birthday: formattedDate,
+      birthday: moment(birthday).format("DD/MM/YYYY"),
       doctorId: doctorId,
       gender: selectedGender.value,
       timeType: this?.props?.route?.params?.dataSchedule?.timeType || "T1",
@@ -301,7 +299,7 @@ class BookingScreen extends Component {
                 <FormInput
                   uri="calendar"
                   placeholder="Ngày sinh"
-                  value={birthday}
+                  value={moment(birthday).format("DD/MM/YYYY")}
                   marginBottom={scaleV(16)}
                   onFocus={() => this.setState({ openDatePicker: true })}
                   setValue={() => { }}
@@ -314,7 +312,7 @@ class BookingScreen extends Component {
                   onConfirm={(date) => {
                     this.setState({
                       openDatePicker: false,
-                      birthday: moment(date).format("DD/MM/YYYY")
+                      birthday: date
                     })
                   }}
                   onCancel={() => {
