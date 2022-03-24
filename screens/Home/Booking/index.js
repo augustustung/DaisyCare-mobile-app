@@ -38,10 +38,10 @@ class BookingScreen extends Component {
       openDatePicker: false
     }
   }
-
   async componentDidMount() {
     await this.props.fetchGender()
     const { user } = this.props
+    console.log(this.props.route.params)
 
     if (user && !_.isEmpty(user)) {
       this.setState({
@@ -99,7 +99,6 @@ class BookingScreen extends Component {
     for (let i = 0; i < valid.length; i++) {
       if (!this.state[valid[i]]) {
         Alert.alert("Daisy Care", "Vui lòng điền thông tin")
-        console.log(valid[i])
         return false
       }
     }
@@ -119,7 +118,7 @@ class BookingScreen extends Component {
       selectedGender
     } = this.state
 
-    const { dataSchedule } = this.props.route.params
+    const { dataSchedule, doctorId } = this.props.route.params
 
     if (!this.validateInput()) return
     this.setState({
@@ -129,7 +128,6 @@ class BookingScreen extends Component {
     let formattedDate = new Date(birthday).getTime()
     let timeString = this.buildTimeBooking(dataSchedule)
     let doctorName = this.buildDoctorName(dataSchedule)
-
     const dataUser = {
       firstName: firstName,
       lastName: lastName,
@@ -139,7 +137,7 @@ class BookingScreen extends Component {
       reason: reason,
       date: dataSchedule.date,
       birthday: formattedDate,
-      doctorId: this.props.doctorId,
+      doctorId: doctorId,
       gender: selectedGender.value,
       timeType: this?.props?.route?.params?.dataSchedule?.timeType || "T1",
       language: 'vi',
