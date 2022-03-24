@@ -17,6 +17,7 @@ import Toast from 'react-native-toast-message';
 import { FormButton, FormInput, CustomDropDownPicker } from '../../components'
 import { ColorConst, scaleH, scaleV } from '../../ultis'
 import { useDispatch } from 'react-redux'
+import moment from 'moment';
 
 function RegisterScreen({
     navigation
@@ -88,7 +89,7 @@ function RegisterScreen({
             firstName: firstName,
             lastName: lastName,
             phoneNumber: phoneNumber,
-            birthday: new Date(),
+            birthday: moment(new Date()).format("DD/MM/YYYY"),
             address: address,
             gender: gender
         })
