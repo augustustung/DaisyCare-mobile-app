@@ -18,6 +18,7 @@ import { FormButton, FormInput, CustomDropDownPicker } from '../../components'
 import { ColorConst, scaleH, scaleV } from '../../ultis'
 import { useDispatch } from 'react-redux'
 import moment from 'moment';
+import ProgressLoader from 'rn-progress-loader'
 
 function RegisterScreen({
     navigation
