@@ -38,6 +38,7 @@ function RegisterScreen({
         { label: 'Nữ', value: 'F' },
         { label: "Khác", value: "O" }
     ])
+    const [loading, setLoading] = useState(false)
 
     const {
         email,
@@ -71,13 +72,13 @@ function RegisterScreen({
         const validate = validateInfo()
         if (!validate)
             return
-
+        setLoading(true)
         let firstName = ''
         let lastName = ''
         const arrName = fullName.split(" ")
         if (arrName.length > 2) {
             firstName = arrName[0]
-            lastName = arrName.filter(item => item !== firstName).join(',')
+            lastName = arrName.filter(item => item !== firstName).join(' ')
         } else {
             firstName = arrName[0]
             lastName = arrName[1] || '   '
@@ -95,6 +96,7 @@ function RegisterScreen({
         })
 
         if (res && res.errCode === 0) {
+            setLoading(false)
             dispatch(loginSuccess({
                 email: email,
                 password: password,
@@ -113,6 +115,7 @@ function RegisterScreen({
                 autoHide: true,
             })
         } else if (res.errCode === 2) {
+            setLoading(false)
             Toast.show({
                 type: 'error',
                 position: 'top',
@@ -121,7 +124,7 @@ function RegisterScreen({
                 autoHide: true,
             })
         } else {
-            console.log(res)
+            setLoading(false)
             Toast.show({
                 type: "error",
                 position: 'top',
@@ -129,6 +132,16 @@ function RegisterScreen({
                 autoHide: true,
             })
         }
+    }
+
+    if (loading) {
+        return (
+            <ProgressLoader
+                visible={loading}
+                isModal={true} isHUD={true}
+                hudColor={"#000000"}
+                color={"#FFFFFF"} />
+        )
     }
 
     return (
