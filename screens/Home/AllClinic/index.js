@@ -20,7 +20,7 @@ const AllClinic = ({
 
     const buildDataPicker = (data) => {
         let arrData = []
-        for(let i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             let obj = {
                 label: data[i].nameVi,
                 value: data[i].id
@@ -32,14 +32,14 @@ const AllClinic = ({
 
     useEffect(() => {
         dispatch(fetchAllClinic())
-    },[])
+    }, [])
 
     useEffect(() => {
-        if(allClinic && allClinic.length > 0) {
+        if (allClinic && allClinic.length > 0) {
             setDataClinic(allClinic)
             buildDataPicker(allClinic)
         }
-    },[allClinic])
+    }, [allClinic])
 
     const renderItem = ({ item }) => {
         return (
@@ -56,15 +56,15 @@ const AllClinic = ({
     }
 
     useEffect(() => {
-        if(selectedValue) {
+        if (selectedValue) {
             navigation.navigate('DetailClinic', selectedValue)
             setSelectedValue(null)
         }
-    },[selectedValue])
-    
+    }, [selectedValue])
+
     return (
         <SafeContainer>
-            <CustomHeader headerLeft={() => headerLeft({ navigation: navigation, routeName: "Bệnh viện" })}/>
+            <CustomHeader headerLeft={() => headerLeft({ navigation: navigation, routeName: "Bệnh viện" })} />
             <View style={styles.horizontal16}>
                 <CustomDropDownPicker
                     open={openDropdown}
@@ -76,7 +76,7 @@ const AllClinic = ({
                     placeholder="Tìm chuyên bệnh viện"
                 />
             </View>
-            <FlatList 
+            <FlatList
                 data={dataClinic}
                 keyExtractor={obj => Math.random()}
                 renderItem={renderItem}

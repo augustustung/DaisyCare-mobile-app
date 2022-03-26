@@ -35,7 +35,7 @@ class BookingScreen extends Component {
       ],
       isLoading: false,
       open: false,
-      openDatePicker: false
+      // openDatePicker: false
     }
   }
   async componentDidMount() {
@@ -134,7 +134,7 @@ class BookingScreen extends Component {
       address: address,
       reason: reason,
       date: dataSchedule.date,
-      birthday: moment(birthday).format("DD/MM/YYYY"),
+      birthday: birthday,
       doctorId: doctorId,
       gender: selectedGender.value,
       timeType: this?.props?.route?.params?.dataSchedule?.timeType || "T1",
@@ -221,7 +221,7 @@ class BookingScreen extends Component {
       listGender,
       selectedGender,
       open,
-      openDatePicker
+      // openDatePicker
     } = this.state
 
     return (
@@ -299,13 +299,13 @@ class BookingScreen extends Component {
                 <FormInput
                   uri="calendar"
                   placeholder="Ngày sinh"
-                  value={moment(birthday).format("DD/MM/YYYY")}
+                  value={birthday}
                   marginBottom={scaleV(16)}
-                  onFocus={() => this.setState({ openDatePicker: true })}
-                  setValue={() => { }}
+                  // onFocus={() => this.setState({ openDatePicker: true })}
+                  setValue={(text) => this.setState(prev => ({ ...prev, birthday: text }))}
                 />
 
-                <DatePicker
+                {/* <DatePicker
                   modal mode="date"
                   open={openDatePicker}
                   date={birthday ? new Date(birthday) : new Date()}
@@ -320,7 +320,7 @@ class BookingScreen extends Component {
                       openDatePicker: false
                     })
                   }}
-                />
+                /> */}
 
                 <FormInput
                   uri="question-circle"

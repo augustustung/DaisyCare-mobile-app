@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import SafeContainer from '../../components/SafeContainer'
 import { useLayoutEffect } from 'react'
 import { getAllScheduled, userCancelSchedule } from '../../services'
@@ -28,10 +28,14 @@ export default function BookingSchedule({ navigation }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: "Lịch khám"
+      headerTitle: "Lịch khám",
+      headerRight: () => <TouchableOpacity style={{ paddingRight: 16 }} onPress={fetchData}><Text>Tải lại</Text></TouchableOpacity>
     })
+  }, [])
+
+  useEffect(() => {
     fetchData()
-  },[])
+  }, [])
 
   async function handleCancelSchedule(scheduleId) {
     const res = await userCancelSchedule(scheduleId)
@@ -56,7 +60,7 @@ export default function BookingSchedule({ navigation }) {
 
   return (
     <SafeContainer>
-      <FlatList 
+      <FlatList
         style={styles.scheduleContainer}
         data={dataSchedule}
         keyExtractor={() => Math.random()}
@@ -71,8 +75,8 @@ export default function BookingSchedule({ navigation }) {
               <Text style={styles.text}>Trạng thái: {renderStatus(item?.statusId)}</Text>
               {
                 item.statusId === "S1" && (
-                  <TouchableOpacity 
-                    onPress={() => handleCancelSchedule(item.id)} 
+                  <TouchableOpacity
+                    onPress={() => handleCancelSchedule(item.id)}
                     style={styles.cancelBtn}
                   >
                     <Text style={styles.cancelBtnText}>HUỶ</Text>
@@ -80,7 +84,8 @@ export default function BookingSchedule({ navigation }) {
                 )
               }
             </View>
-        )}}
+          )
+        }}
       />
     </SafeContainer>
   )

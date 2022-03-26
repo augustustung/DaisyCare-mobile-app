@@ -44,8 +44,6 @@ const appReducer = (state = initialState, action) => {
                 isLoading: false
             }
         case actionTypes.FETCH_ALL_CLINIC:
-            console.log('is loadgasg');
-            console.log(state);
             return {
                 ...state,
                 allClinic: action.payload,

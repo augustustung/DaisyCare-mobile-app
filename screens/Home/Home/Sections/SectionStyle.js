@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
         backgroundColor: "#eee"
     },
     sectionCard: {
-        height: scaleV(177),
+        height: scaleV(187),
         paddingRight: scaleH(16),
         width: scaleH(220)
     },

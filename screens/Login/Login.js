@@ -69,29 +69,27 @@ class LoginScreen extends Component {
         const isValid = this.validate()
         if (!isValid)
             return;
-
         else {
-            this.props.processAction()
-
             const res = await handleLogin(email, password)
 
-            if (res && res.errCode === 0)
+            if (res && res.errCode === 0) {
                 this.props.loginSuccess(res.user)
-            else {
-                if (res.errCode === 3)
+            } else {
+                if (res.errCode === 3) {
                     this.setState({
                         borderPasswordColor: ColorConst.PRIMARY_RED,
                         err: res.errMessage
                     })
-                else if (res.errCode === 1)
+                }
+                else if (res.errCode === 1) {
                     this.setState({
                         borderEmailColor: ColorConst.PRIMARY_RED,
                         err: res.errMessage
                     })
-                else
+                }
+                else {
                     this.setState({ err: res.message })
-
-                this.props.processActionFailed()
+                }
             }
         }
     }
